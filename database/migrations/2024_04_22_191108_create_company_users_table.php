@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('nota_adicional');
             $table->boolean('eliminado')->default(false);
             $table->foreign('empresa_id')->references('id')->on('users');
-            $table->timestamps();
         });
     }
 

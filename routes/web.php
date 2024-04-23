@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Usuarios\CompanyUserAbogadoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,5 +26,7 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-});
 
+    Route::resource('company_abogado_users', CompanyUserAbogadoController::class);
+    Route::post('/company_abogado_users/search', [CompanyUserAbogadoController::class, 'search'])->name('company_abogado_users.search');
+});

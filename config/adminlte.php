@@ -157,7 +157,7 @@ return [
     'layout_fixed_sidebar' => null,
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
-    'layout_dark_mode' => true,
+    'layout_dark_mode' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -321,7 +321,7 @@ return [
         [
             'icon' => 'fas fa-fw fa-user',
             'text' => 'lawyers',
-            'url' => '#',
+            'url' => 'company_abogado_users/index',
         ],
         [
             'icon' => 'fas fa-fw fa-history',
