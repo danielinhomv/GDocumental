@@ -21,8 +21,9 @@ return new class extends Migration
             $table->string('nota_adicional')->nullable();
             $table->datetime('fecha_apertura')->default(now());
             $table->boolean('eliminado');
-            $table->foreign('abogado_id')->references('id')->on('company_users');
-            $table->foreign('cliente_id')->references('id')->on('company_users');
+
+            $table->foreign('abogado_id')->references('id')->on('users');
+            $table->foreign('cliente_id')->references('id')->on('users');
         });
     }
 

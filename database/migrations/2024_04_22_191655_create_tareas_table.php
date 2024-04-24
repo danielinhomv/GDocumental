@@ -21,6 +21,7 @@ return new class extends Migration
             $table->datetime('fecha_hora_asignacion')->default(now());
             $table->datetime('fecha_hora_limite');
             $table->boolean('eliminado');
+            
             $table->foreign('caso_id')->references('id')->on('casos');
         });
     }

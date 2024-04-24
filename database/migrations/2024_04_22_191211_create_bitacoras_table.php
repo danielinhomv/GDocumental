@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('companyUser_id');
             $table->string('accion');
             $table->datetime('fecha_hora')->default(now());
-            $table->foreign('companyUser_id')->references('id')->on('company_users');
+
+            $table->foreign('companyUser_id')->references('id')->on('users');
         });
     }
 
