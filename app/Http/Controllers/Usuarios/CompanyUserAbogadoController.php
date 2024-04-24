@@ -41,16 +41,16 @@ class CompanyUserAbogadoController extends Controller
         $request->validate([
             'empresa_id' => 'required|exists:users,id',
             'nombre_completo' => 'required',
-            'registro' => 'required',
             'contraseña' => 'required|min:8',
-            'rol' => 'required',
             'direccion' => 'required',
             'telefono' => 'required',
             'nota_adicional' => 'nullable',
         ]);
 
-        CompanyUser::create($request->all());
-
+        $user=CompanyUser::create([$request->all(),'registro'=>12345678]);
+        $registro=CompanyUser::generarRegistro($user->id);
+        $user->registro=$registro;
+        $user->save();
         return redirect()->route('company_abogado_users.index')
             ->with('success', 'Usuario de empresa creado correctamente.');
     }
