@@ -3,9 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -27,6 +30,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'telefono',
+        'nombre_completo',
+        'direccion',
+        'nota_adicional',
+        'rol'
     ];
     public $timestamp=false;
     /**
@@ -58,4 +66,21 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+    public function estaEliminado()
+    {
+        if ($this->eliminado) {
+            throw new Exception('El usuario está eliminado.');
+        }
+    }
+    static function tieneRol($rol){
+        try {            
+            $user=self::findOrFail(Auth::id());
+            if($user->rol!==$rol){
+                abort(403, 'No estás autorizado para acceder a esta página.');
+            }       
+        } catch (\Throwable $th) {
+            abort(403, 'No estás autorizado para acceder a esta página.');
+        }
+ 
+    }
 }

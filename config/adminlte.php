@@ -62,13 +62,13 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Basic-Configuration
     |
     */
-
     'logo' => 'Management',
     'logo_img' => 'storage/image.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -316,17 +316,27 @@ return [
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],
-        ['header' => 'users_management'],
-
+        [
+            'icon' => 'fas fa-fw fa-chart-line',
+            'text' => 'Dashboard',
+            'url' => '/dashboard',
+        ],
+        ['header' => 'users_management'],     
         [
             'icon' => 'fas fa-fw fa-user',
-            'text' => 'lawyers',
+            'text' => 'Lawyers',
             'url' => 'company_abogado_users/index',
         ],
         [
             'icon' => 'fas fa-fw fa-history',
-            'text' => 'actions',
-            'url' => '#',
+            'text' => 'Actions',
+            'url' => 'bitacoras/index',
+        ],
+        ['header' => 'Legal_cases'],     
+        [
+            'icon' => 'fas fa-fw fa-gavel',
+            'text' => 'Citas',
+            'url' => 'casos_cita/create',
         ],
     ],
 

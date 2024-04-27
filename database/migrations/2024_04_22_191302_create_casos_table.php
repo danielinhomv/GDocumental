@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,9 +20,9 @@ return new class extends Migration
             $table->string('descripcion');
             $table->string('estado')->default('abierto');
             $table->string('nota_adicional')->nullable();
-            $table->datetime('fecha_apertura')->default(now());
+            $table->datetime('fecha_apertura');
             $table->boolean('eliminado');
-
+            $table->timestamps();
             $table->foreign('abogado_id')->references('id')->on('users');
             $table->foreign('cliente_id')->references('id')->on('users');
         });
