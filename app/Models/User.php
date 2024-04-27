@@ -3,14 +3,20 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Casos\Caso;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+//audit 
+
+
+
+class User extends Authenticatable 
 {
     use HasApiTokens;
     use HasFactory;
@@ -58,4 +64,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+    /**
+     * Obtener los casos asociados a este usuario. uno a mucho usuario tiene mucho
+     */
+    public function Cliente_user()
+    {
+        return $this->hasMany(Caso::class, 'cliente_id');
+    }
+
+    public function abogado_user()
+    {
+        return $this->hasMany(Caso::class, 'abogado_id');
+    }
+
+    public function empresa():HasMany{
+        return $this->HasMany(User::class, 'empresa_id');
+    }
+
+    public function children_empresa(): HasMany{
+        return $this->hasMany(User::class,'empresa_id')->with('empresa');
+    }
 }

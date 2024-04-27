@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 return [
 
     /*
@@ -327,6 +329,16 @@ return [
             'icon' => 'fas fa-fw fa-history',
             'text' => 'actions',
             'url' => '#',
+        ],
+        [
+            'icon' => 'fas fa-fw fa-briefcase',
+            'text' => 'portaforio',
+            'url' => 'casos/index',
+        ], 
+        [
+            'icon' => 'fas fa-fw fa-briefcase',
+            'text' => 'adsa',
+            'url' => 'xZX',
         ],
     ],
 

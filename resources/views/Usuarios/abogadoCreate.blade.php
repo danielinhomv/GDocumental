@@ -32,7 +32,8 @@
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-</form>@stop
+</form>
+@stop
 
 @section('css')
     {{-- Add here extra stylesheets --}}
