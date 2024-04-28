@@ -35,6 +35,7 @@ Route::middleware([
     Route::get('/casos/{id}/edit',[App\Http\Controllers\Casos\casoController::class, 'edit'])->name('casos.edit');
     Route::patch('/casos/{id}/update',[App\Http\Controllers\Casos\casoController::class, 'update'])->name('casos.update');
     Route::delete('/casos/{id}/delete',[App\Http\Controllers\Casos\casoController::class, 'destroy'])->name('casos.destroy');
+    Route::post('/casos/search', [App\Http\Controllers\Casos\casoController::class, 'search'])->name('casos.search');
 
     //Route::resource('casos', casoController::class);
     // Route::resource('company_abogado_users', CompanyUserAbogadoController::class);

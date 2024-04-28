@@ -2,6 +2,7 @@
 
 namespace App\Models\Casos;
 
+use App\Models\Documental\Expediente;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,10 @@ class Caso extends Model
     public function cliente_user()
     {
         return $this->belongsTo(User::class, 'cliente_id');
+    }
+    public function expedientes()
+    {
+        return $this->hasMany(Expediente::class);
     }
 
 }

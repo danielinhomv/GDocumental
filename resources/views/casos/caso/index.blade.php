@@ -13,7 +13,17 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Mis Datos</div>
-                   
+                    <div class="card-tools">
+                        <form role="form" action="{{ route('casos.search') }}" method="POST"
+                            class="input-group input-group-sm" style="width: 150px;">
+                            @csrf
+                            <input type="text" name="search" class="form-control float-right " placeholder="Search">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+    
 
                     <div class="mb-2 text-end">
                         @if(Auth::user()->rol == 'abogado')
@@ -31,6 +41,10 @@
                                     @endif
                                     @if(Auth::user()->rol == 'cliente' )
                                     <th>Nombre de abogado</th>
+                                    @endif
+                                    
+                                    @if(Auth::user()->rol == 'abogado' )
+                                    <th>Nombre de cliente</th>
                                     @endif
                                     <th>nombre del Caso</th>
                                     <th>descripcion</th>
@@ -54,6 +68,8 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
                                         </form></td>
+                                        <td><a href="#" class="btn btn-info btn-sm">cita</a></td>
+                                        <td><a href="#" class="btn btn-info btn-sm">docu</a></td>
                                         
                                     </tr>
                                     

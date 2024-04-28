@@ -175,5 +175,29 @@ class casoController extends Controller
             ->withSuccess(__('User deleted successfully.'));
     }
 
+    
+ public function search(Request $request)
+ {   
+    $user = Auth::user();
+    if($user->rol == 'cliente'){
+        $casos= $user->cliente_user; // Obtiene todos los casos asociados a este abogado
+     }elseif( $user->rol == 'abogado') {
+        $casos = $user->abogado_user;}
+     else{
+        $casos = Caso::all();
+     }
+
+     $a = User::all();
+     $search = $request->get('search');
+     $result = collect();
+    foreach ($casos as $caso) {
+        $nombre= $caso->abogado_user->name;
+        if (str_contains($caso->nombre, $search)) {
+            $caso->nombre_abogado = $nombre;
+            $result->push($caso);
+        }
+    }
+     return view('Casos.Caso.index', compact('result'));
+ }
 
 }
