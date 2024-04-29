@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             'nombre_completo'=>'vismark montaño vargas',
             'direccion'=>'barrio 22 de octubre-scz',
             'email'=>'abogado@gmail.com',
+            'rol'=>'abogado',
             'empresa_id'=>1,
             'password'=>bcrypt('12345678'),   
         ]);
@@ -43,6 +44,7 @@ class DatabaseSeeder extends Seeder
             'nombre_completo'=>'daniel montaño vargas',
             'direccion'=>'calle melchor pinto-cbba',
             'empresa_id'=>2,
+            'rol'=>'cliente',
             'password'=>bcrypt('12345678'),   
         ]);
         //caso
