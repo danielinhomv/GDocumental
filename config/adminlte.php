@@ -334,10 +334,10 @@ return [
         ],
         ['header' => 'Legal_cases'],     
         [
-            'icon' => 'fas fa-fw fa-gavel',
-            'text' => 'Citas',
-            'url' => 'casos_cita/create',
-        ],
+            'icon' => 'fas fa-fw fa-briefcase',
+            'text' => 'Casos',
+            'url' => 'casos/index',
+        ], 
     ],
 
     /*

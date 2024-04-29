@@ -11,7 +11,11 @@
 <div class="col-12">
     <div class="card">
         <div class="d-flex justify-content-between align-items-center">
-            <button  type="button" class="btn btn-lg bg-gradient-primary btn-lg " >Primary</button>
+            <button  type="button" class="btn btn-lg bg-gradient-primary btn-lg " >             
+                <a href="{{route('citas.create',$caso_id)}} " class="text-white">
+                    Nueva cita    
+                </a>               
+            </button>
             <form class="form-inline">
                 <div class="input-group ">
                     <input type="search" class="form-control form-control-lg" placeholder="Search">
@@ -23,32 +27,17 @@
                 </div>
             </form>
         </div>
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">
+        <ul class="list-group">
+            @foreach ( $citas as $cita)
+            <li  class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small>3 days ago</small>
+                    <h5 class="mb-1">{{$cita->descripcion}}</h5>
                 </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small>And some small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-muted">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-muted">And some muted small print.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
-                    <small class="text-muted">3 days ago</small>
-                </div>
-                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                <small class="text-muted">And some muted small print.</small>
-            </a>
-        </div>
+                <p class="mb-1">{{$cita->fecha_hora}}</small>
+            </li>
+            @endforeach
+
+        </ul>
     </div>
 </div>
 @stop

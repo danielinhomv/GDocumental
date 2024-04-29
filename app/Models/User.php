@@ -4,8 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Casos\Caso;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +38,7 @@ class User extends Authenticatable
         'nota_adicional',
         'rol'
     ];
-    public $timestamp=false;
+    public $timestamp = false;
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -72,15 +74,34 @@ class User extends Authenticatable
             throw new Exception('El usuario está eliminado.');
         }
     }
-    static function tieneRol($rol){
-        try {            
-            $user=self::findOrFail(Auth::id());
-            if($user->rol!==$rol){
+    static function tieneRol($rol)
+    {
+        try {
+            $user = self::findOrFail(Auth::id());
+            if ($user->rol !== $rol) {
                 abort(403, 'No estás autorizado para acceder a esta página.');
-            }       
+            }
         } catch (\Throwable $th) {
             abort(403, 'No estás autorizado para acceder a esta página.');
         }
- 
+    }
+    public function Cliente_user()
+    {
+        return $this->hasMany(Caso::class, 'cliente_id');
+    }
+
+    public function abogado_user()
+    {
+        return $this->hasMany(Caso::class, 'abogado_id');
+    }
+
+    public function empresa(): HasMany
+    {
+        return $this->HasMany(User::class, 'empresa_id');
+    }
+
+    public function children_empresa(): HasMany
+    {
+        return $this->hasMany(User::class, 'empresa_id')->with('empresa');
     }
 }
