@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             'direccion'=>'barrio 22 de octubre-scz',
             'email'=>'abogado@gmail.com',
             'rol'=>'abogado',
+            'telefono'=>'72634989',
             'empresa_id'=>1,
             'password'=>bcrypt('12345678'),   
         ]);
@@ -43,7 +44,8 @@ class DatabaseSeeder extends Seeder
             'email'=>'cliente@gmail.com',
             'nombre_completo'=>'daniel montaño vargas',
             'direccion'=>'calle melchor pinto-cbba',
-            'empresa_id'=>2,
+            'empresa_id'=>1,
+            'telefono'=>'69485317',
             'rol'=>'cliente',
             'password'=>bcrypt('12345678'),   
         ]);

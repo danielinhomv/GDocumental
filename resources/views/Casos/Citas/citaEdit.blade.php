@@ -10,26 +10,27 @@
     <div class="col-md-6 offset-md-3">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Nueva Cita</h3>
+                <h3 class="card-title">Editar Cita</h3>
             </div>
 
             <div class="card-body">
-                <form id="cita-form" action="{{ route('citas.store', $caso_id) }}" method="POST">
+                <form id="cita-form" action="{{ route('citas.update', $cita->id) }}" method="POST">
                     @csrf
-                    <div class="form-group">
+                    @method('patch') <div class="form-group">
                         <label for="descripcion">Nombre</label>
                         <input type="text" class="form-control" id="descripcion" name="descripcion" rows="3"
-                            placeholder="Nombre de la cita" required></input>
+                            value="{{ $cita->descripcion }}" required></input>
                     </div>
                     <div class="form-group">
                         <label>Descripcion</label>
-                        <textarea class="form-control" rows="3" name='nota_adicional' placeholder="Enter ..."></textarea>
+                        <textarea class="form-control" rows="3" name='nota_adicional'>{{ $cita->nota_adicional }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="fecha_hora">Fecha y Hora</label>
-                        <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora" required>
+                        <input type="datetime-local" class="form-control" id="fecha_hora" name="fecha_hora"
+                            value="{{ $cita->fecha_cierre }}" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Crear Cita</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Casos;
 use App\Http\Controllers\Controller;
 
 use App\Models\Casos\Caso;
+use App\Models\Documental\Expediente;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,18 +29,19 @@ class CasoController extends Controller
 
             foreach ($casos as $caso) {
             
-                if($user->rol == 'cliente'){
-                    $cliente= $caso->abogado_user; // Obtiene todos los casos asociados a este abogado
-                 }else {
-                    $cliente = $caso->cliente_user;}
-
-                $result[] = [
-                            'nombre' => $caso->nombre, 
-                            'nombre_cliente' =>$cliente->name,
-                            'descripcion' => $caso->descripcion, 
-                            'estado'=> $caso->estado,
-                            'id' => $caso->id,
+                    if( $caso->eliminado == false){
+                        if($user->rol == 'cliente'){
+                            $cliente= $caso->abogado_user; // Obtiene todos los casos asociados a este abogado
+                         }else {
+                            $cliente = $caso->cliente_user;}
+                         $result[] = [
+                                'nombre' => $caso->nombre, 
+                                'nombre_cliente' =>$cliente->name,
+                                'descripcion' => $caso->descripcion, 
+                                'estado'=> $caso->estado,
+                                 'id' => $caso->id,
                         ];
+                    }
             }  
             return view('Casos.Casos.index', compact('result') );
 
@@ -50,15 +52,18 @@ class CasoController extends Controller
 
                 $casos = $hijo->abogado_user; // Obtiene todos los casos asociados a este abogado  
                 foreach ($casos as $caso) {
-                    $cliente = $caso->cliente_user;
-                $result[] = [//'abogado_nombre'=>$hijo->name,
-                            'nombre_abogado'=> $hijo->name,
-                            'nombre_cliente'=> $cliente->name,
-                            'nombre' => $caso->nombre, 
-                            'descripcion' => $caso->descripcion, 
-                            'estado'=> $caso->estado,
-                            'id' => $caso->id,  
+                    
+                    if( $caso->eliminado == false){
+                        $cliente = $caso->cliente_user;
+                          $result[] = [//'abogado_nombre'=>$hijo->name,
+                                'nombre_abogado'=> $hijo->name,
+                                'nombre_cliente'=> $cliente->name,
+                                'nombre' => $caso->nombre, 
+                                'descripcion' => $caso->descripcion, 
+                                'estado'=> $caso->estado,
+                                'id' => $caso->id,  
                         ];
+                    }
                 }  
             }
             return view('Casos.Casos.index',compact('result'));
@@ -78,7 +83,7 @@ class CasoController extends Controller
         $result = [];
         foreach ($clientes as $lis) {
             if($lis->rol == 'cliente'){
-            $result[] = ['id' => $lis->id, 'nombre'=> $lis->name];
+            $result[] = ['id' => $lis->id, 'name'=> $lis->name];
             }
         }
         return view('Casos.Casos.create', compact('result'));
@@ -96,11 +101,19 @@ class CasoController extends Controller
         $caso->cliente_id = $request->cliente_id;
         $caso->nombre = $request->nombre;
         $caso->descripcion = $request->descripcion;
-        $caso->estado = 'abierto';
         $caso->nota_adicional = $request->nota_adicional;
         $caso->fecha_apertura = now();
 
         $caso->save();
+
+        $expediente = new Expediente;
+        $expediente->caso_id = $caso->id;
+        $expediente->nombre = $caso->nombre;
+        $expediente->descripcion = $caso->descripcion;
+        $expediente->fecha_creacion= $caso->fecha_apertura;
+        $expediente->save();
+
+
 
         return redirect()->route('casos.index')
             ->withSuccess(__('User created successfully.'));
@@ -119,7 +132,7 @@ class CasoController extends Controller
             return redirect()->route('casos.index')
                     ->withErrors(__('´Recursos no encontrado'));
         }
-        return view('Casos.Caso.show', compact('caso','abogado', 'cliente'));
+        return view('Casos.Casos.show', compact('caso','abogado', 'cliente'));
         
     }
 
@@ -154,6 +167,7 @@ class CasoController extends Controller
         $caso->estado= $request->estado;
         $caso->descripcion = $request->descripcion;
         $caso->fecha_apertura = now();
+        $caso->eliminado = false;
 
         $caso->save();
 
@@ -167,7 +181,8 @@ class CasoController extends Controller
     public function destroy(string $id)
     {
         $user = Caso::find($id);
-        $user->delete();
+        $user->eliminado = true;
+        $user->save();
 
         return redirect()->route('casos.index')
             ->withSuccess(__('User deleted successfully.'));

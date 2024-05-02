@@ -27,7 +27,7 @@
 
                     <div class="mb-2 text-end">
                         @if(Auth::user()->rol == 'abogado')
-                        <a href="{{ route('casos.create') }}" class="btn btn-primary btn-sm float-right">Add user</a>
+                        <a href="{{ route('casos.create') }}" class="btn btn-primary btn-sm float-right">Nuevo caso</a>
                         @endif
                     </div>
 
@@ -36,19 +36,20 @@
                             <thead>
                                 <tr>
                                     @if(Auth::user()->rol == 'empresa' )
-                                    <th>Nombre de abogado</th>
-                                    <th>nombre de cliente</th>
+                                    <th> abogado</th>
+                                    <th> cliente</th>
                                     @endif
                                     @if(Auth::user()->rol == 'cliente' )
-                                    <th>Nombre de abogado</th>
+                                    <th> abogado</th>
                                     @endif
                                     
                                     @if(Auth::user()->rol == 'abogado' )
-                                    <th>Nombre de cliente</th>
+                                    <th> cliente</th>
                                     @endif
                                     <th>nombre del Caso</th>
                                     <th>descripcion</th>
                                     <th>estado</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,20 +62,27 @@
                                         <td>{{ $dato['nombre'] }}</td>
                                         <td>{{ $dato['descripcion'] }}</td>
                                         <td>{{ $dato['estado'] }}</td>
-                                        <td><a href="{{ route('casos.show', $dato['id']) }}" class="btn btn-warning btn-sm">Show</a></td>
-                                        <td><a href="{{ route('casos.edit', $dato['id']) }}" class="btn btn-info btn-sm">Edit</a></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-info"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Acción</font></font></button>
+                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Alternar menú desplegable</font></font></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                <li><a href="{{ route('casos.show', $dato['id']) }}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Show</font></font></a></li>
+                                                <li><a href="{{ route('casos.edit', $dato['id']) }}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Edit</font></font></a></li>
+                                                <li><a href="{{route('citas.index',$dato['id'])}}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cita</font></font></a></li>
+                                                <li><a href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Expediente</font></font></a></li>
+                                                </ul>
+                                                </div>
+                                        </td>
                                         <td><form action="{{ route('casos.destroy', $dato['id']) }}" method="POST" style="display:inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
                                         </form></td>
-                                        <td>
-                                            <a href="{{ route('citas.index', $dato['id'] ) }}" class="btn btn-info btn-sm">cita
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-info btn-sm">docu</a>
-                                        </td>
+                                     
                                         
                                     </tr>
                                     

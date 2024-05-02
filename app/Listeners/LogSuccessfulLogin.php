@@ -15,6 +15,7 @@ class LogSuccessfulLogin
         if ($event->user) {
         Bitacora::create([
             'companyUser_id' => $event->user->id,
+            'ip'=>request()->ip(),
             'accion' => 'Inicio de sesión',
             'fecha_hora'=>Carbon::now('America/La_Paz')
         ]);

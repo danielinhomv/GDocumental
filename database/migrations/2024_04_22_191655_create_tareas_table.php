@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->string('estado')->default('abierto');
-            $table->string('nota_adicional')->nullable();
             $table->datetime('fecha_hora_asignacion');
             $table->datetime('fecha_hora_limite');
             $table->boolean('eliminado')->default(false);

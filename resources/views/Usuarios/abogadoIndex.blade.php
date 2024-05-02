@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<img src="/storage/hombre_abogado.png" alt="" width="50">
+<img src="/storage/hombre_abogado.png" alt="">
 @stop
 
 @section('content')
@@ -24,7 +24,7 @@
             </div>
 
             <div class="card-body table-responsive p-0" style="height: 300px;">
-                <table class="table table-head-fixed text-nowrap">
+                <table class="table table-head-fixed text-nowrap table table-bordered"">
                     <thead>
                         <tr>
                             <th>ID</th>

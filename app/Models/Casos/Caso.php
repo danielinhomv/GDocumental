@@ -4,6 +4,7 @@ namespace App\Models\Casos;
 
 use App\Models\Documental\Expediente;
 use App\Models\User;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,5 +35,16 @@ class Caso extends Model
     public function expedientes()
     {
         return $this->hasMany(Expediente::class);
+    }
+    public static function existe($id)
+    {
+        try {
+            $caso = self::findOrFail($id);
+            if ($caso->eliminado) {
+                throw new Exception('El caso está eliminado.');
+            }
+        } catch (\Throwable $th) {
+            throw new Exception('El caso no existe.');
+        }
     }
 }

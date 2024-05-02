@@ -3,14 +3,14 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<img src="/storage/hombre_abogado.png" alt="" width="50">
+<img src="/storage/hombre_abogado.png" alt="">
 @stop
 
 @section('content')
     <div class="col-md-6 offset-md-3">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Nuevo Abogado</h3>
+                <h3 class="card-title">Nuevo abogado</h3>
             </div>
             <form role="form" action="{{ route('company_abogado_users.store') }}" method="POST">
                 @csrf

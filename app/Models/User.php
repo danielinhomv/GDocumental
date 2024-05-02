@@ -39,6 +39,7 @@ class User extends Authenticatable
         'rol'
     ];
     public $timestamp = false;
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -79,10 +80,21 @@ class User extends Authenticatable
         try {
             $user = self::findOrFail(Auth::id());
             if ($user->rol !== $rol) {
-                abort(403, 'No estás autorizado para acceder a esta página.');
+                abort(403, 'No estás autorizado.');
             }
         } catch (\Throwable $th) {
-            abort(403, 'No estás autorizado para acceder a esta página.');
+            abort(403, 'No estás autorizado..');
+        }
+    }
+    static function esClienteOrAbogado()
+    {
+        try {
+            $user = self::findOrFail(Auth::id());
+            if ($user->rol == null) {
+                abort(403, 'No estás autorizado.');
+            }
+        } catch (\Throwable $th) {
+            abort(403, 'No estás autorizado.');
         }
     }
     public function Cliente_user()
@@ -103,5 +115,21 @@ class User extends Authenticatable
     public function children_empresa(): HasMany
     {
         return $this->hasMany(User::class, 'empresa_id')->with('empresa');
+    }
+    public function rol()
+    {
+        return $this->rol;
+    }
+    public static function existe($id)
+    {
+        try {
+            $abogado = self::findOrFail($id);
+            if ($abogado->eliminado) {
+                throw new Exception('la abogado está eliminada.');
+            }
+        
+        } catch (\Throwable $th) {
+            throw new Exception('La abogado no existe.');
+        }
     }
 }
