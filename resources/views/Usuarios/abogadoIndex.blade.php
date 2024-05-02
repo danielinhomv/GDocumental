@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lawyers</h1>
+<img src="/storage/hombre_abogado.png" alt="" width="50">
 @stop
 
 @section('content')
@@ -12,12 +12,14 @@
             <div class="card-header">
                 <h3 class="card-title">list of lawyers</h3>
                 <div class="card-tools">
-                    <div class="input-group input-group-sm" style="width: 150px;">
-                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                    <form role="form" action="{{ route('company_abogado_users.search') }}" method="POST"
+                        class="input-group input-group-sm" style="width: 150px;">
+                        @csrf
+                        <input type="text" name="search" class="form-control float-right " placeholder="Search">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
 
@@ -27,39 +29,43 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre completo</th>
-                            <th>Registro</th>
+                            <th>Email</th>
                             <th>Direccion</th>
                             <th>telefono</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($companyUsers->isEmpty())
-                            <tr>
-                                <td colspan="6" class="text-center">No hay registros</td>
-                            </tr>
-                        @else
-                            @foreach ($companyUsers as $companyUser)
+                            @if ($abogados->count() === 0)
                                 <tr>
-                                    <td>{{ $companyUser->id }}</td>
-                                    <td>{{ $companyUser->nombre_completo }}</td>
-                                    <td>{{ $companyUser->direccion }}</td>
-                                    <td>{{ $companyUser->telefono }}</td>
-                                    <a class="btn btn-dark"
-                                        href="{{ route('company_abogado_users.show', $companyUser->id) }}"
-                                        class="btn btn-info">Show</a>
-                                    <a class="btn btn-primary"
-                                        href="{{ route('company_abogado_users.edit', $companyUser->id) }}"
-                                        class="btn btn-primary">Edit</a>
-                                    <form action="{{ route('company_abogado_users.destroy', $companyUser->id) }}"
-                                        method="POST" style="display: inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
+                                    <td colspan="6" class="text-center">No se econtraron resultados</td>
                                 </tr>
-                            @endforeach
-                        @endif
+                            @else
+                                @foreach ($abogados as $abogado)
+                                    <tr>
+                                        <td>{{ $abogado->id }}</td>
+                                        <td>{{ $abogado->nombre_completo }}</td>
+                                        <td>{{ $abogado->email }}</td>
+                                        <td>{{ $abogado->direccion }}</td>
+                                        <td>{{ $abogado->telefono }}</td>
+                                        <td class="align-middle">
+                                            <div class="btn-group mb-2 mt-n2">
+                                                <a class="btn btn-dark"
+                                                    href="{{ route('company_abogado_users.show', $abogado->id) }}">Show</a>
+                                                <a class="btn btn-primary"
+                                                    href="{{ route('company_abogado_users.edit', $abogado->id) }}">Edit</a>
+                                                <form action="{{ route('company_abogado_users.destroy', $abogado->id) }}"
+                                                    method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            @endif
                     </tbody>
                 </table>
             </div>
@@ -67,7 +73,6 @@
                 <button type="button" class="btn btn-primary">
                     <a href="{{ route('company_abogado_users.create') }}" class="text-white">New</a>
                 </button>
-                
             </div>
         </div>
 

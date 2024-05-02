@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Casos;
 
+use App\Http\Controllers\Controller;
 use App\Models\Casos\Caso;
 use Illuminate\Http\Request;
 

@@ -4,10 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Casos\Caso;
+
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -33,7 +36,22 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'telefono',
+        'nombre_completo',
+        'direccion',
+        'nota_adicional',
+        'rol'
     ];
+    static $rules=[
+        // 'cliente_id'=>'required',
+        'name' => 'required',
+        'nombre_completo' => 'required',
+        'email' => 'required',
+        'password' => 'required|min:8',
+        'direccion' => 'required',
+        'telefono' => 'required',
+        'nota_adicional' => 'nullable',
+     ];
     public $timestamp=false;
     /**
      * The attributes that should be hidden for serialization.
@@ -83,5 +101,23 @@ class User extends Authenticatable
 
     public function children_empresa(): HasMany{
         return $this->hasMany(User::class,'empresa_id')->with('empresa');
+    
+    }
+    public function estaEliminado()
+    {
+        if ($this->eliminado) {
+            throw new Exception('El usuario está eliminado.');
+        }
+    }
+    static function tieneRol($rol){
+        try {            
+            $user=self::findOrFail(Auth::id());
+            if($user->rol !== $rol){
+                abort(403, 'No estás autorizado para acceder a esta página.');
+            }       
+        } catch (\Throwable $th) {
+            abort(403, 'No estás autorizado para acceder a esta página.');
+        }
+ 
     }
 }

@@ -1,7 +1,12 @@
 <?php
 
 use App\Http\Controllers\casoController;
+//use App\Http\Controllers\Usuarios\CompanyUserAbogadoController;
+use App\Http\Controllers\Casos\CitaController;
+use App\Http\Controllers\Usuarios\AbogadoController;
+use App\Http\Controllers\Usuarios\BitacoraController;
 use App\Http\Controllers\Usuarios\CompanyUserAbogadoController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,8 +41,22 @@ Route::middleware([
     Route::patch('/casos/{id}/update',[App\Http\Controllers\Casos\casoController::class, 'update'])->name('casos.update');
     Route::delete('/casos/{id}/delete',[App\Http\Controllers\Casos\casoController::class, 'destroy'])->name('casos.destroy');
     Route::post('/casos/search', [App\Http\Controllers\Casos\casoController::class, 'search'])->name('casos.search');
+    Route::post('/casos/crear_cliente', [App\Http\Controllers\Casos\clienteController::class, 'store'])->name('casos.cliente-store');
 
     //Route::resource('casos', casoController::class);
     // Route::resource('company_abogado_users', CompanyUserAbogadoController::class);
     //Route::post('/company_abogado_users/search', [CompanyUserAbogadoController::class, 'search'])->name('company_abogado_users.search');
+//es empresa
+        Route::resource('company_abogado_users', AbogadoController::class);
+        Route::post('/company_abogado_users/search', [AbogadoController::class, 'search'])->name('company_abogado_users.search');
+        Route::get('bitacoras/index', [BitacoraController::class, 'index']);
+        Route::post('bitacoras/search', [BitacoraController::class, 'search'])->name('bitacoras.search');
+
+        Route::get('citas/{caso_id}',[CitaController::class,'index'])->name('citas.index');
+        Route::get('citas/{caso_id}/{abogado_id}',[CitaController::class,'create'])->name('citas.create');
+        Route::post('citas',[CitaController::class,'store'])->name('citas.store');
+
+        Route::get('prueba',function(){
+            return view('Casos/Citas/citaIndex');
+        });
 });
