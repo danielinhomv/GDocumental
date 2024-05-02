@@ -148,15 +148,15 @@ class casoController extends Controller
     {
 
         $user = Caso::find($id);
-        $abogado = $user->abogado_user;
+        //$abogado = $user->abogado_user;
        // $userRole= User::where('role', 'abogado')->where('empresa_id', $abogado->empresa_id)->get();
-         $abo= User::where('rol', 'abogado')->where('empresa_id', $abogado->empresa_id)->get();
-         $userAbogado = [];
-        foreach ($abo as $lis) {
-            $userAbogado[] = ['id' => $lis->id, 'nombre'=> $lis->name];
-        }
+        // $abo= User::where('rol', 'abogado')->where('empresa_id', $abogado->empresa_id)->get();
+      //   $userAbogado = [];
+       // foreach ($abo as $lis) {
+          //  $userAbogado[] = ['id' => $lis->id, 'nombre'=> $lis->name];
+       // }
          
-        return view('Casos.Caso.edit',compact('user', 'userAbogado'));
+        return view('Casos.Caso.edit',compact('user'));
     }
 
     /**
@@ -166,13 +166,8 @@ class casoController extends Controller
     {
         request()->validate(Caso::$rules);
         $caso = Caso::find($id);
-
-        $caso->abogado_id = $request->abogado_id; // Aquí obtenemos el ID del usuario autenticado
         $caso->nombre = $request->nombre;
-        $caso->estado= $request->estado;
         $caso->descripcion = $request->descripcion;
-        $caso->fecha_apertura = now();
-        $caso->eliminado = false;
 
         $caso->save();
 
