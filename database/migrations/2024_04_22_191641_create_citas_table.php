@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('descripcion');
             $table->string('nota_adicional')->nullable();
             $table->string('audio_url')->nullable();
-            $table->datetime('fecha_hora');
-            $table->boolean('eliminado');
+            $table->datetime('fecha_creacion');
+            $table->datetime('fecha_cierre');
+            $table->boolean('eliminado')->default(false);
             $table->timestamps();
             $table->foreign('abogado_id')->references('id')->on('users');
             $table->foreign('caso_id')->references('id')->on('casos');

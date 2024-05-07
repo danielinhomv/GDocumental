@@ -17,6 +17,7 @@ class LogSuccessfulLogout
         if ($event->user) {
         Bitacora::create([
             'companyUser_id' => $event->user->id,
+            'ip'=>request()->ip(),
             'accion' => 'Cierre de sesión',
             'fecha_hora'=>Carbon::now('America/La_Paz')
         ]);

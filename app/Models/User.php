@@ -3,8 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Casos\Caso;
 
+
+use App\Models\Casos\Caso;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -85,7 +86,7 @@ class User extends Authenticatable
     /**
      * Obtener los casos asociados a este usuario. uno a mucho usuario tiene mucho
      */
-    public function Cliente_user()
+    public function cliente_user()
     {
         return $this->hasMany(Caso::class, 'cliente_id');
     }
@@ -116,8 +117,35 @@ class User extends Authenticatable
                 abort(403, 'No estás autorizado para acceder a esta página.');
             }       
         } catch (\Throwable $th) {
-            abort(403, 'No estás autorizado para acceder a esta página.');
+            abort(403, 'No estás autorizado..');
         }
- 
+    }
+    static function esClienteOrAbogado()
+    {
+        try {
+            $user = self::findOrFail(Auth::id());
+            if ($user->rol == null) {
+                abort(403, 'No estás autorizado.');
+            }
+        } catch (\Throwable $th) {
+            abort(403, 'No estás autorizado.');
+        }
+    }
+    
+    public function rol()
+    {
+        return $this->rol;
+    }
+    public static function existe($id)
+    {
+        try {
+            $abogado = self::findOrFail($id);
+            if ($abogado->eliminado) {
+                throw new Exception('la abogado está eliminada.');
+            }
+        
+        } catch (\Throwable $th) {
+            throw new Exception('La abogado no existe.');
+        }
     }
 }

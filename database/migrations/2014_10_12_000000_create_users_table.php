@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('direccion')->nullable();
             $table->string('telefono')->nullable();
             $table->string('nota_adicional')->nullable();
-            $table->boolean('eliminado')->nullable();
+            $table->boolean('eliminado')->default(false);
             $table->timestamps();
         });
     }

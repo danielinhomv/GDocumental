@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class casoController extends Controller
+class CasoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,19 +21,21 @@ class casoController extends Controller
     {
         $user = Auth::user();
         $result = [];
-        if ($user->empresa_id != null) {
-             if($user->rol == 'cliente'){
-                $casos= $user->cliente_user; // Obtiene todos los casos asociados a este abogado
-             }else {
-                $casos = $user->abogado_user;}
-
+        if ($user->empresa_id != null) {     
+            if( $user->rol == 'cliente'){
+                $casos = $user->cliente_user;
+            }else{
+                $casos = $user->abogado_user;
+            }
             foreach ($casos as $caso) {
             
                     if( $caso->eliminado == false){
-                        if($user->rol == 'cliente'){
-                            $cliente= $caso->abogado_user; // Obtiene todos los casos asociados a este abogado
-                         }else {
-                            $cliente = $caso->cliente_user;}
+                        
+                        if( $user->rol == 'cliente'){
+                            $cliente = $caso->abogado_user;
+                        }else{
+                            $cliente = $caso->cliente_user;
+                        }
                          $result[] = [
                                 'nombre' => $caso->nombre, 
                                 'nombre_cliente' =>$cliente->name,
@@ -43,7 +45,7 @@ class casoController extends Controller
                         ];
                     }
             }  
-            return view('Casos.Caso.index', compact('result') );
+            return view('Casos.Casos.index', compact('result') );
 
         } else {
 
@@ -66,7 +68,7 @@ class casoController extends Controller
                     }
                 }  
             }
-            return view('Casos.Caso.index',compact('result'));
+            return view('Casos.Casos.index',compact('result'));
         }
 
     }
@@ -86,7 +88,7 @@ class casoController extends Controller
             $result[] = ['id' => $lis->id, 'name'=> $lis->name];
             }
         }
-        return view('Casos.Caso.create', compact('result'));
+        return view('Casos.Casos.create', compact('result'));
     }
 
     /**
@@ -101,10 +103,8 @@ class casoController extends Controller
         $caso->cliente_id = $request->cliente_id;
         $caso->nombre = $request->nombre;
         $caso->descripcion = $request->descripcion;
-        $caso->estado = 'abierto';
         $caso->nota_adicional = $request->nota_adicional;
         $caso->fecha_apertura = now();
-        $caso->eliminado = false;
 
         $caso->save();
 
@@ -112,13 +112,8 @@ class casoController extends Controller
         $expediente->caso_id = $caso->id;
         $expediente->nombre = $caso->nombre;
         $expediente->descripcion = $caso->descripcion;
-        $expediente->ubicacion = 'sadassda';
         $expediente->fecha_creacion= $caso->fecha_apertura;
-        $expediente->eliminado= false;
-
         $expediente->save();
-
-
 
         return redirect()->route('casos.index')
             ->withSuccess(__('User created successfully.'));
@@ -137,7 +132,7 @@ class casoController extends Controller
             return redirect()->route('casos.index')
                     ->withErrors(__('´Recursos no encontrado'));
         }
-        return view('Casos.Caso.show', compact('caso','abogado', 'cliente'));
+        return view('Casos.Casos.show', compact('caso','abogado', 'cliente'));
         
     }
 
@@ -146,17 +141,8 @@ class casoController extends Controller
      */
     public function edit(string $id)
     {
-
-        $user = Caso::find($id);
-        //$abogado = $user->abogado_user;
-       // $userRole= User::where('role', 'abogado')->where('empresa_id', $abogado->empresa_id)->get();
-        // $abo= User::where('rol', 'abogado')->where('empresa_id', $abogado->empresa_id)->get();
-      //   $userAbogado = [];
-       // foreach ($abo as $lis) {
-          //  $userAbogado[] = ['id' => $lis->id, 'nombre'=> $lis->name];
-       // }
-         
-        return view('Casos.Caso.edit',compact('user'));
+        $user = Caso::find($id);  
+        return view('Casos.Casos.edit',compact('user'));
     }
 
     /**
@@ -166,9 +152,9 @@ class casoController extends Controller
     {
         request()->validate(Caso::$rules);
         $caso = Caso::find($id);
+
         $caso->nombre = $request->nombre;
         $caso->descripcion = $request->descripcion;
-
         $caso->save();
 
         return redirect()->route('casos.index');
@@ -193,24 +179,29 @@ class casoController extends Controller
  {   
     $user = Auth::user();
     if($user->rol == 'cliente'){
-        $casos= $user->cliente_user; // Obtiene todos los casos asociados a este abogado
+        $casos= $user->cliente_user; // Obtiene todos los casos asociados a este cliente
      }elseif( $user->rol == 'abogado') {
         $casos = $user->abogado_user;}
      else{
-        $casos = Caso::all();
+
+        $empresa = $user->children_empresa; 
+        $casos = collect();
+        foreach ($empresa as $hijo) {
+            $casos = $casos->concat($hijo->abogado_user); // Agrega los casos del hijo actual a $casos
+        }
      }
 
-     $a = User::all();
      $search = $request->get('search');
      $result = collect();
     foreach ($casos as $caso) {
-        $nombre= $caso->abogado_user->name;
+
         if (str_contains($caso->nombre, $search)) {
-            $caso->nombre_abogado = $nombre;
+            $caso->nombre_abogado = $caso->abogado_user->name;
+            $caso->nombre_cliente = $caso->cliente_user->name;
             $result->push($caso);
         }
     }
-     return view('Casos.Caso.index', compact('result'));
+     return view('Casos.Casos.index', compact('result'));
  }
 
 }

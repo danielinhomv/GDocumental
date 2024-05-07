@@ -3,14 +3,14 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+<img src="/storage/casos.png" alt="">
 @stop
 
 @section('content')
 <div class="bg-light rounded">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Update caso</h5>
+            <h5 class="card-title">Editar caso</h5>
 
             <div class="container mt-4">
                 <form method="post" action="{{ route('casos.update', $user->id) }}">

@@ -336,20 +336,10 @@ return [
         ],
         ['header' => 'Legal_cases'],     
         [
-            'icon' => 'fas fa-fw fa-gavel',
-            'text' => 'Citas',
-            'url' => 'casos_cita/create',
-        ],
-        [
             'icon' => 'fas fa-fw fa-briefcase',
-            'text' => 'portaforio',
+            'text' => 'Casos',
             'url' => 'casos/index',
         ], 
-        [
-            'icon' => 'fas fa-fw fa-briefcase',
-            'text' => 'adsa',
-            'url' => 'xZX',
-        ],
     ],
 
     /*

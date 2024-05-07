@@ -17,6 +17,7 @@ class LogSuccessfulRegistration
         Bitacora::create([
             'companyUser_id' => $event->user->id,
             'accion' => 'Registro de empresa',
+            'ip'=>request()->ip(),
             'fecha_hora'=>Carbon::now('America/La_Paz')
         ]);
     }

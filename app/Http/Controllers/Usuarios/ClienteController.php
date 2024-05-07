@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Casos;
+namespace App\Http\Controllers\Usuarios;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class clienteController extends Controller
+class ClienteController extends Controller
 {
     public function store(Request $request)
     {
         //
-        try { 
+        try {
             $request->validate([
                 'name' => 'required',
                 'nombre_completo' => 'required',
@@ -24,14 +24,14 @@ class clienteController extends Controller
             ]);
             $user = Auth::user()->empresa_id;
             $cliente = User::create($request->all());
-            $cliente->rol = 'cliente' ;
+            $cliente->rol = 'cliente';
             $cliente->empresa_id = $user;
             $cliente->password = bcrypt($cliente->password);
             $cliente->save();
             $result[] = ['id' => $cliente->id, 'name' => $cliente->name];
-            
 
-            return view('Casos.Caso.create',compact('result'))->with('success', 'registro exitoso');
+
+            return view('Casos.Caso.create', compact('result'))->with('success', 'registro exitoso');
         } catch (\Throwable $th) {
             return redirect()->route('casos.create')->with('error', $th->getMessage());
         }

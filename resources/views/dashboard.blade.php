@@ -79,6 +79,7 @@
                 <ul class="nav nav-pills ml-auto">
                   <li class="nav-item">
                     <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                    <a href="{{ route('backup') }}" class="btn btn-primary">Crear copia de seguridad</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>

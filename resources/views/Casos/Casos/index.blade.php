@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+<img src="/storage/casos.png" alt="">
 @stop
 
 @section('content')
@@ -35,18 +35,15 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    @if(Auth::user()->rol == 'empresa' )
-                                    <th> abogado</th>
-                                    <th> cliente</th>
-                                    @endif
-                                    @if(Auth::user()->rol == 'cliente' )
+                                   
+                                    @if(Auth::user()->rol == 'cliente' || Auth::user()->rol === null)
                                     <th> abogado</th>
                                     @endif
                                     
-                                    @if(Auth::user()->rol == 'abogado' )
+                                    @if(Auth::user()->rol == 'abogado' || Auth::user()->rol === null )
                                     <th> cliente</th>
                                     @endif
-                                    <th>nombre del Caso</th>
+                                    <th> Caso</th>
                                     <th>descripcion</th>
                                     <th>estado</th>
                                     <th>Acciones</th>
@@ -55,10 +52,12 @@
                             <tbody>
                                 @foreach ($result as $dato)
                                     <tr> 
-                                        @if(Auth::user()->rol == 'empresa')
+                                        @if(Auth::user()->rol === null || Auth::user()->rol == 'cliente' )
                                             <td>{{$dato['nombre_abogado']}} </td>
                                         @endif
-                                        <td>{{$dato['nombre_cliente']}} </td>     
+                                        @if(Auth::user()->rol === null || Auth::user()->rol == 'abogado' )
+                                            <td>{{$dato['nombre_cliente']}} </td>
+                                        @endif     
                                         <td>{{ $dato['nombre'] }}</td>
                                         <td>{{ $dato['descripcion'] }}</td>
                                         <td>{{ $dato['estado'] }}</td>
@@ -70,10 +69,10 @@
                                                 <span class="sr-only"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Alternar menú desplegable</font></font></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                <li><a href="{{ route('casos.show', $dato['id']) }}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Show</font></font></a></li>
-                                                <li><a href="{{ route('casos.edit', $dato['id']) }}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Edit</font></font></a></li>
-                                                <li><a href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cita</font></font></a></li>
-                                                <li><a href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Expediente</font></font></a></li>
+                                                <li><a href="{{ route('casos.show', $dato['id']) }}"><font style="vertical-align: inherit;">Show</font></a></li>
+                                                <li><a href="{{ route('casos.edit', $dato['id']) }}"><font style="vertical-align: inherit;">Edit</font></a></li>
+                                                <li><a href="{{route('citas.index',$dato['id'])}}"><font style="vertical-align: inherit;">Cita</font></a></li>
+                                                <li><a href="#"><font style="vertical-align: inherit;">Expediente</font></a></li>
                                                 </ul>
                                                 </div>
                                         </td>

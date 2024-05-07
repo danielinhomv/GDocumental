@@ -76,6 +76,9 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => 'prefer',
+            'dump' => [
+                'dump_binary_path' => 'C:\Program Files\PostgreSQL\15\bin',
+            ]
         ],
 
         'sqlsrv' => [

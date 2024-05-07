@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<img src="/storage/control-de-calidad.png" alt="" width="64">
+<img src="/storage/bitacora.png" alt="">
 
 @stop
 
@@ -25,12 +25,13 @@
         </div>
 
         <div class="card-body table-responsive p-0" style="height: 300px;">
-            <table class="table table-head-fixed text-nowrap">
+            <table class="table table-head-fixed text-nowrap table table-bordered"">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Rol</th>
+                        <th>Ip</th>
                         <th>Accion</th>
                         <th>Fecha</th>
                 </thead>
@@ -49,8 +50,10 @@
                                     @else
                                     <td>{{ $bitacora->rol }}</td>
                                     @endif
+                                    <td>{{ $bitacora->ip }}</td>
                                     <td>{{ $bitacora->accion }}</td>
                                     <td>{{ $bitacora->fecha_hora }}</td>
+                                    
                                 </tr>
                             @endforeach
                         @endif

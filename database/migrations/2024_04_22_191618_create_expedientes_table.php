@@ -17,10 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('caso_id');
             $table->string('nombre');
             $table->string('descripcion');
-            $table->string('nota_adicional')->nullable();
             $table->datetime('fecha_creacion');
-            $table->string('ubicacion');
-            $table->boolean('eliminado');
+            $table->boolean('eliminado')->default(false);
             $table->foreign('caso_id')->references('id')->on('casos');
             $table->timestamps();
 
