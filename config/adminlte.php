@@ -314,30 +314,42 @@ return [
         [
             'text' => 'change_password',
             'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'fas fa-fw fa-user',
         ],
+        [
+            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Home',
+            'url' => '/dashboard',
+        ],
+        ['header' => 'management'],     
         [
             'icon' => 'fas fa-fw fa-chart-line',
             'text' => 'Dashboard',
-            'url' => '/dashboard',
+            'url' => '/principal',
         ],
-        ['header' => 'users_management'],     
         [
             'icon' => 'fas fa-fw fa-user',
             'text' => 'Lawyers',
             'url' => 'company_abogado_users/index',
         ],
+        
         [
             'icon' => 'fas fa-fw fa-history',
             'text' => 'Actions',
             'url' => 'bitacoras/index',
         ],
+        [
+            'icon' => 'fas fa-fw fa-briefcase',
+            'text' => 'Report',
+            'url' => 'reportes/index',
+        ], 
         ['header' => 'Legal_cases'],     
         [
             'icon' => 'fas fa-fw fa-briefcase',
             'text' => 'Casos',
             'url' => 'casos/index',
-        ], 
+        ],    
+
     ],
 
     /*

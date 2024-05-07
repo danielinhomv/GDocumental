@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+<img src="/storage/casos.png" alt="">
 @stop
 
 @section('content')
@@ -35,7 +35,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    @if(Auth::user()->rol == 'empresa' )
+                                    @if(Auth::user()->rol === null )
                                     <th> abogado</th>
                                     <th> cliente</th>
                                     @endif
@@ -55,7 +55,7 @@
                             <tbody>
                                 @foreach ($result as $dato)
                                     <tr> 
-                                        @if(Auth::user()->rol == 'empresa')
+                                        @if(Auth::user()->rol ===null)
                                             <td>{{$dato['nombre_abogado']}} </td>
                                         @endif
                                         <td>{{$dato['nombre_cliente']}} </td>     
@@ -95,7 +95,17 @@
             </div>
         </div>
     </div>
-
+    <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+        <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+        <div class="info-box-content">
+        <span class="info-box-text">Messages</span>
+        <span class="info-box-number">1,410</span>
+        </div>
+        
+        </div>
+        
+        </div>
 
     
 @stop

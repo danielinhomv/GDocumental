@@ -36,25 +36,11 @@
                         @endif
                     </div>
                     <div class="mb-3">
-                        <label for="estado" class="form-label">estado</label>
-                        <input value="{{ $user->estado }}" type="text" class="form-control" name="estado" placeholder="estado"
-                            required>
-
                         @if ($errors->has('descripcion'))
                         <span class="text-danger text-left">{{ $errors->first('descripcion') }}</span>
                         @endif
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="descripcion" class="form-label">Abogado</label>
-                        <select name="abogado_id" id="abogado_id" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                        @foreach ($userAbogado as $item)
-                            <option value = "{{ $item['id'] }}" > {{$item['nombre']}}</option>
-                        @endforeach
-                        </select>
-                     </div>
-
-                    <button type="submit" class="btn btn-primary">Update user</button>
+                    </div>                    
+                    <button type="submit" class="btn btn-primary">Save</button>
                     <a href="{{ route('casos.index') }}" class="btn btn-default">Cancel</button>
                 </form>
             </div>

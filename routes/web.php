@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Casos\CasoController;
 use App\Http\Controllers\Casos\CitaController;
+use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\Report\ReporteController;
 use App\Http\Controllers\Usuarios\ClienteController;
 use App\Http\Controllers\Usuarios\AbogadoController;
 use App\Http\Controllers\Usuarios\BitacoraController;
@@ -29,9 +31,9 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('home');
     })->name('dashboard');
-
+    Route::get('/principal',[dashboardController::class,'principal'])->name('principal');
     Route::resource('company_abogado_users', AbogadoController::class);
     Route::post('/company_abogado_users/search', [AbogadoController::class, 'search'])->name('company_abogado_users.search');
     Route::get('bitacoras/index', [BitacoraController::class, 'index']);
@@ -58,4 +60,8 @@ Route::middleware([
     Route::post('citas/search', [CitaController::class, 'search'])->name('citas.search');
     Route::get('citas/usuario/{caso_id}', [CitaController::class, 'verUsuarioCliente'])->name('citas.usuarioCliente');
     Route::get('citas/usuario/perfil/{abogado_id}', [CitaController::class, 'verUsuarioAbogado'])->name('citas.usuarioAbogado');
+
+    Route::get('reportes/index', [ReporteController::class, 'index'])->name('reporte.index');
+    Route::post('reportes/ver', [ReporteController::class, 'ver'])->name('reporte.ver');
+
 });

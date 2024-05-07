@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gabinete de Abogados</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Animaciones CSS personalizadas -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Estilos CSS personalizados -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,6 +24,14 @@
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
+
+        /* Estilos específicos para dispositivos móviles */
+        @media (max-width: 767px) {
+            body {
+                background-attachment: scroll;
+                /* Evita que la imagen de fondo se fije en dispositivos móviles */
+            }
+        }
     </style>
 </head>
 <body>
@@ -35,7 +44,7 @@
                     @if (Route::has('login'))
                     <div class="mt-4">
                         @auth
-                        <a href="{{ url('/dashboard') }}" class="btn btn-success btn-lg">Ir al Panel de Control</a>
+                        <a href="{{ url('/home') }}" class="btn btn-success btn-lg">Ir al Panel de Control</a>
                         @else
                         <a href="{{ route('login') }}" class="btn btn-primary btn-lg">Iniciar sesión</a>
                         @if (Route::has('register'))

@@ -24,7 +24,7 @@ class AbogadoController extends Controller
     {
         $abogados = User::where('empresa_id', Auth::id())
             ->where('rol', 'abogado')
-            ->where('eliminado', null)
+            ->where('eliminado', false)
             ->get();
         return view('Usuarios/abogadoIndex', compact('abogados'));
     }

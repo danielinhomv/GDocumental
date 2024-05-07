@@ -24,7 +24,7 @@
             </div>
 
             <div class="card-body table-responsive p-0" style="height: 300px;">
-                <table class="table table-head-fixed text-nowrap table table-bordered"">
+                <table class="table table-head-fixed text-nowrap table table-bordered" >
                     <thead>
                         <tr>
                             <th>ID</th>
