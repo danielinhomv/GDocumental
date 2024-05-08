@@ -6,6 +6,8 @@
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\Casos\CasoController;
 use App\Http\Controllers\Casos\CitaController;
+use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\Report\ReporteController;
 use App\Http\Controllers\Usuarios\ClienteController;
 use App\Http\Controllers\Usuarios\AbogadoController;
 use App\Http\Controllers\Usuarios\BitacoraController;
@@ -32,17 +34,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
-    
-    Route::get('/casos/index', [App\Http\Controllers\Casos\casoController::class, 'index'])->name('casos.index');
-    Route::get('/casos/crear', [App\Http\Controllers\Casos\casoController::class, 'create'])->name('casos.create');
-    Route::post('/casos/crear', [App\Http\Controllers\Casos\casoController::class, 'store'])->name('casos.store');
-    Route::get('/casos/{id}/show',[App\Http\Controllers\Casos\casoController::class, 'show'])->name('casos.show');
-    Route::get('/casos/{id}/edit',[App\Http\Controllers\Casos\casoController::class, 'edit'])->name('casos.edit');
-    Route::patch('/casos/{id}/update',[App\Http\Controllers\Casos\casoController::class, 'update'])->name('casos.update');
-    Route::delete('/casos/{id}/delete',[App\Http\Controllers\Casos\casoController::class, 'destroy'])->name('casos.destroy');
-    Route::post('/casos/search', [App\Http\Controllers\Casos\casoController::class, 'search'])->name('casos.search');
-    Route::post('/casos/crear_cliente', [App\Http\Controllers\Usuarios\ClienteController::class, 'store'])->name('casos.cliente-store');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
     Route::resource('company_abogado_users', AbogadoController::class);
     Route::post('/company_abogado_users/search', [AbogadoController::class, 'search'])->name('company_abogado_users.search');
@@ -70,6 +64,4 @@ Route::middleware([
     Route::post('citas/search', [CitaController::class, 'search'])->name('citas.search');
     Route::get('citas/usuario/{caso_id}', [CitaController::class, 'verUsuarioCliente'])->name('citas.usuarioCliente');
     Route::get('citas/usuario/perfil/{abogado_id}', [CitaController::class, 'verUsuarioAbogado'])->name('citas.usuarioAbogado');
-  
-
 });
