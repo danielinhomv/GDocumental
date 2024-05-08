@@ -22,18 +22,17 @@ class CasoController extends Controller
         $user = Auth::user();
         $result = [];
         if ($user->empresa_id != null) {     
-            if( $user->rol == 'cliente'){
-                $casos = $user->cliente_user;
-            }else{
+            if ($user->rol == 'cliente') {
+                $casos = $user->cliente_user; // Obtiene todos los casos asociados a este abogado
+            } else {
                 $casos = $user->abogado_user;
             }
             foreach ($casos as $caso) {
             
-                    if( $caso->eliminado == false){
-                        
-                        if( $user->rol == 'cliente'){
-                            $cliente = $caso->abogado_user;
-                        }else{
+                    if( $caso->eliminado == false){  
+                        if ($user->rol == 'cliente') {
+                            $cliente = $caso->abogado_user; // Obtiene todos los casos asociados a este abogado
+                        } else {
                             $cliente = $caso->cliente_user;
                         }
                          $result[] = [
