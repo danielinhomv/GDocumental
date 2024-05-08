@@ -4,7 +4,7 @@
 //use App\Http\Controllers\Usuarios\CompanyUserAbogadoController;
 
 use App\Http\Controllers\BackupController;
-use App\Http\Controllers\Casos\CasoController;
+use App\Http\Controllers\Casos\CasosController;
 use App\Http\Controllers\Casos\CitaController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\Report\ReporteController;
@@ -43,14 +43,14 @@ Route::middleware([
     Route::get('bitacoras/index', [BitacoraController::class, 'index']);
     Route::post('bitacoras/search', [BitacoraController::class, 'search'])->name('bitacoras.search');
 
-    Route::get('/casos/index', [CasoController::class, 'index'])->name('casos.index');
-    Route::get('/casos/crear', [CasoController::class, 'create'])->name('casos.create');
-    Route::post('/casos/crear', [CasoController::class, 'store'])->name('casos.store');
-    Route::get('/casos/{id}/show', [CasoController::class, 'show'])->name('casos.show');
-    Route::get('/casos/{id}/edit', [CasoController::class, 'edit'])->name('casos.edit');
-    Route::patch('/casos/{id}/update', [CasoController::class, 'update'])->name('casos.update');
-    Route::delete('/casos/{id}/delete', [CasoController::class, 'destroy'])->name('casos.destroy');
-    Route::post('/casos/search', [CasoController::class, 'search'])->name('casos.search');
+    Route::get('/casos/index', [CasosController::class, 'index'])->name('casos.index');
+    Route::get('/casos/crear', [CasosController::class, 'create'])->name('casos.create');
+    Route::post('/casos/crear', [CasosController::class, 'store'])->name('casos.store');
+    Route::get('/casos/{id}/show', [CasosController::class, 'show'])->name('casos.show');
+    Route::get('/casos/{id}/edit', [CasosController::class, 'edit'])->name('casos.edit');
+    Route::patch('/casos/{id}/update', [CasosController::class, 'update'])->name('casos.update');
+    Route::delete('/casos/{id}/delete', [CasosController::class, 'destroy'])->name('casos.destroy');
+    Route::post('/casos/search', [CasosController::class, 'search'])->name('casos.search');
     Route::post('/casos/crear_cliente', [ClienteController::class, 'store'])->name('casos.cliente-store');
 
 
