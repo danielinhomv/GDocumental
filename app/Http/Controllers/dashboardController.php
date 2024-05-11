@@ -15,6 +15,7 @@ class dashboardController extends Controller
             return $next($request);
         });
     }
+    
     public function principal(){
         return view('dashboard');
     }

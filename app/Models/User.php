@@ -148,4 +148,5 @@ class User extends Authenticatable
             throw new Exception('La abogado no existe.');
         }
     }
+    
 }

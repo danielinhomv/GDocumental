@@ -31,7 +31,7 @@ class ClienteController extends Controller
             $result[] = ['id' => $cliente->id, 'name' => $cliente->name];
 
 
-            return view('Casos.Caso.create', compact('result'))->with('success', 'registro exitoso');
+            return view('Casos.Casos.create', compact('result'))->with('success', 'registro exitoso');
         } catch (\Throwable $th) {
             return redirect()->route('casos.create')->with('error', $th->getMessage());
         }
