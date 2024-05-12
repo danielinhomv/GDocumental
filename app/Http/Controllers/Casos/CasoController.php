@@ -20,6 +20,7 @@ class CasoController extends Controller
      */
     public function index()
     {
+        //brrr
         $user = Auth::user();
         $result = [];
         if ($user->empresa_id != null) {
