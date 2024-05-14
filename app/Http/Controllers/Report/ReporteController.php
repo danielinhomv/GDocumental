@@ -20,6 +20,7 @@ class ReporteController extends Controller
 
     public function index()
     {
+        //dd('hola');
         $abogados = $this->abogados();
         return view('Report/reporteIndex', compact('abogados'));
     }
@@ -246,6 +247,9 @@ class ReporteController extends Controller
                 }
                 break;
         }
-        return view('Report/reporteShow', compact('respuesta', 'tipoReporte', 'abogados'));
+        if($respuesta!=null && !$respuesta->isEmpty()){
+            return view('Report/reporteShow', compact('respuesta', 'tipoReporte', 'abogados'));
+        }
+        return redirect()->route('reporte.index');
     }
 }

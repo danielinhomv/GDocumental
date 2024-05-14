@@ -91,9 +91,6 @@
                 <div class="card-body">
                     <div class="mt-3">
                         <div class="table-responsive">
-                            @if ($respuesta->count() == 0)
-                                <p>No se encontraron resultados.</p>
-                            @else
                                 @switch($tipoReporte)
                                     @case('clientes')
                                         <table class="table table-bordered table-hover">
@@ -211,8 +208,6 @@
                                         </table>
                                 @endswitch
                         </div>
-                        @endif
-
                     </div>
                 </div>
             </div>

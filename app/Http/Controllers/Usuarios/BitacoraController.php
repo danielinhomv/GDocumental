@@ -24,19 +24,19 @@ class BitacoraController extends Controller
             ->join('users', 'bitacoras.companyUser_id', '=', 'users.id')
             ->where('users.id', Auth::id())
             ->orWhere('users.empresa_id', Auth::id())
-            ->orderBy('bitacoras.fecha_hora','desc')
-            ->get();    
+            ->orderBy('bitacoras.fecha_hora', 'desc')
+            ->get();
         return view('Usuarios/bitacora', compact('bitacoras'));
     }
     public function search(Request $request)
     {
         $search = $request->get('search');
         $bitacoras = Bitacora::select('bitacoras.*', 'users.name', 'users.rol')
-        ->join('users', 'bitacoras.companyUser_id', '=', 'users.id')
-        ->where('users.id', Auth::id())
-        ->where('users.name', 'like', '%' . $search . '%')
-        ->orWhere('users.empresa_id', Auth::id())
-        ->get(); 
+            ->join('users', 'bitacoras.companyUser_id', '=', 'users.id')
+            ->where('users.name', $search)
+            ->Where('users.empresa_id', Auth::id())
+            //->orWhere('users.id', '=', Auth::id())
+            ->get();
         Bitacora::log('busqueda de un usuario en bitacoras');
         return view('Usuarios/bitacora', compact('bitacoras'));
     }

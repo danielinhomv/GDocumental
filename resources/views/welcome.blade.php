@@ -44,7 +44,7 @@
                     @if (Route::has('login'))
                     <div class="mt-4">
                         @auth
-                        <a href="{{ url('/home') }}" class="btn btn-success btn-lg">Ir al Panel de Control</a>
+                        <a href="{{ url('/dashboard') }}" class="btn btn-success btn-lg">Ir al Panel de Control</a>
                         @else
                         <a href="{{ route('login') }}" class="btn btn-primary btn-lg">Iniciar sesión</a>
                         @if (Route::has('register'))

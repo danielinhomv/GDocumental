@@ -198,4 +198,5 @@ class CasoController extends Controller
         }
         return view('Casos.Casos.index', compact('result'));
     }
+
 }
