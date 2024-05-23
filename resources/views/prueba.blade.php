@@ -1,4 +1,4 @@
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
 
             // if (window.Echo) {
 
-                window.Echo.channel('comentarioCita')
+                window.Echo.channel('comentario-cita')
                 .listen('.comentario', (e) => {
                     console.log(e);
                     // Obtener el área de texto
@@ -37,4 +37,4 @@
         // });
     </script>
 </body>
-</html> --}}
+</html>

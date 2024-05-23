@@ -60,6 +60,10 @@ Route::middleware([
     Route::post('citas/search', [CitaController::class, 'search'])->name('citas.search');
     Route::get('citas/usuario/{caso_id}', [CitaController::class, 'verUsuarioCliente'])->name('citas.usuarioCliente');
     Route::get('citas/usuario/perfil/{abogado_id}', [CitaController::class, 'verUsuarioAbogado'])->name('citas.usuarioAbogado');
+    Route::get('test',[CitaController::class,'test']);
+    Route::get('/prueba',function(){
+        return view('prueba');
+    });
 
     Route::get('reportes/index', [ReporteController::class, 'index'])->name('reporte.index');
     Route::post('reportes/ver', [ReporteController::class, 'ver'])->name('reporte.ver');

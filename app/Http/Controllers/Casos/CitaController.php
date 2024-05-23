@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Casos;
 
+use App\Events\comentarioCita;
 use App\Http\Controllers\Controller;
 use App\Models\Bitacora;
 use App\Models\Casos\Caso;
@@ -16,6 +17,11 @@ class CitaController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function test()
+    {
+        
+        event(new comentarioCita());
+    }
     public function index($caso_id)
     {
         User::esClienteOrAbogado();
