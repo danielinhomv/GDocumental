@@ -41,16 +41,19 @@
                         <p class="mb-1"><span style="color: red;">Expira:</span> {{ $cita->fecha_cierre }}</p>
                     </div>
                     <div>
-                        <a href="{{ route('citas.show', $cita->id) }}" class="btn btn-sm btn-info mr-4"><i
+                        <a href="{{ route('citas.show', $cita->id) }}" class="btn btn-sm btn-info mr-2"><i
                                 class="fas fa-eye"></i>
                         </a>
                         @if (Auth::user()->rol == 'abogado')
-                            <a href="{{ route('citas.edit', $cita->id) }}" class="btn btn-sm btn-warning mr-4"><i
+                            <a href="{{ route('citas.edit', $cita->id) }}" class="btn btn-sm btn-warning mr-2"><i
                                     class="fas fa-edit"></i></a>
-                            <a href="{{ route('citas.destroy', $cita->id) }}" class="btn btn-sm btn-danger"><i
+                            <a href="{{ route('citas.destroy', $cita->id) }}" class="btn btn-sm btn-danger mr-2"><i
                                     class="fas fa-trash"></i></a>                           
                             </a>
                         @endif
+                        <a href="{{ route('citas.chat', $cita->id) }}" class="btn btn-sm btn-info mr-4">
+                            <i class="fas fa-comments"></i>
+                        </a>
                     </div>
                 </div>
             </div>

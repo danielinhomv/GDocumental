@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Casos;
 
+use App\Events\comentarioCitaEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Bitacora;
 use App\Models\Casos\Caso;
 use App\Models\Casos\Cita;
+use App\Models\Casos\Comentario_cita;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,6 +20,22 @@ class CitaController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function send(Request $request)
+    {
+        $request->validate([
+            'message' => 'required|string|max:255',
+            'cita_id' => 'required|exists:citas,id'
+        ]);
+        Comentario_cita::create([
+            'user_id' => Auth::id(),
+            'fecha' => Carbon::now('America/La_Paz'),
+            'mensaje' => $request->message,
+            'cita_id' => $request->cita_id
+        ]);
+        Bitacora::log('realizo un comentario');
+        event(new comentarioCitaEvent($request->message, Auth::id(), Auth::user()->nombre_completo));
+        return response()->json(['message' => $request->message, 'status' => 'success']);
+    }
     public function index($caso_id)
     {
         User::esClienteOrAbogado();
@@ -82,6 +102,18 @@ class CitaController extends Controller
             return view('Casos/Citas/citaShow', compact('cita', 'abogado'));
         } catch (\Throwable $th) {
             abort(403, 'Not found');
+        }
+    }
+    public function chat(string $id)
+    {
+        User::esClienteOrAbogado();
+        try {
+            $cita = Cita::existe($id);
+            $cita_id = $cita->id;
+            $comentarios = $cita->comentarios()->get();
+            return view('Casos/Citas/citaChat', compact('cita_id', 'comentarios'));
+        } catch (\Throwable $th) {
+            abort(403, 'Not found.');
         }
     }
 
@@ -159,7 +191,8 @@ class CitaController extends Controller
     //         abort(403, $th->getMessage());
     //     }
     // }
-    public function verUsuarioAbogado(string $abogado_id){
+    public function verUsuarioAbogado(string $abogado_id)
+    {
         User::esClienteOrAbogado();
         try {
             $usuario = User::findOrFail($abogado_id);
@@ -169,9 +202,9 @@ class CitaController extends Controller
         } catch (\Throwable $th) {
             abort(403, $th->getMessage());
         }
-
     }
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         //
     }
 }

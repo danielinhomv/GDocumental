@@ -5,12 +5,14 @@ namespace App\Models\Casos;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cita extends Model
 {
     use HasFactory;
     protected $guarded=[];
     public $timestamp=false;
+    
     public static function existe($id)
     {
         $cita=null;
@@ -25,4 +27,7 @@ class Cita extends Model
         }
         return $cita;
     }
+    public function comentarios(){
+        return $this->HasMany(Comentario_cita::class);
+    }    
 }
